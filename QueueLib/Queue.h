@@ -24,8 +24,7 @@ public:
 
   void Push(T n);
   void Pop();
-  T GetBack();
-  T GetFront();
+  T Get();
   bool IsEmpty();
   bool IsFull();
   int Length();
@@ -103,7 +102,7 @@ inline void TQueue<T>::Push(T n)
   if (this->count >= this->length)
     throw exception();
   this->back++;
-  if (this->back >= = this->length)
+  if (this->back >= this->length)
     this->back -= this->length;
   this->queue[this->back] = n;
   this->count++;
@@ -112,14 +111,19 @@ inline void TQueue<T>::Push(T n)
 template<class T>
 inline void TQueue<T>::Pop()
 {
-  if (this->front >= 0)
-    this->front--;
+  if (this->count > 0)
+  {
+    this->front++;
+    if (this->front >= this->length)
+      this->front -= this->length;
+    this->count--;
+  }
 }
 
 template<class T>
 inline T TQueue<T>::Get()
 {
-  if (this->front == -1)
+  if (this->count <= 0)
     throw exception();
   return this->queue[this->front];
 }
@@ -127,7 +131,7 @@ inline T TQueue<T>::Get()
 template<class T>
 inline bool TQueue<T>::IsEmpty()
 {
-  if (this->front == this->length - 1)
+  if (this->count > 0)
     return false;
   return true;
 }
@@ -145,15 +149,25 @@ inline int TQueue<T>::Length()
 }
 
 template <class T1>
-ostream& operator<<(ostream& ostr, const TQueue<T1>& S)
+ostream& operator<<(ostream& ostr, const TQueue<T1>& Q)
 {
-  for (int i = 0; i <= S.front; i++)
-    ostr << S.queue[i];
+  int i = Q.front;
+  if (Q.front <= Q.back)
+    for (i; i <= Q.back; i++)
+      ostr << Q.queue[i];
+  else
+  {
+    for (i; i < Q.length; i++)
+      ostr << Q.queue[i];
+    i = 0;
+    for (i; i <= Q.back; i++)
+      ostr << Q.queue[i];
+  }
   return ostr;
 }
 
 template <class T1>
-istream& operator>>(istream& istr, TQueue<T1>& S)
+istream& operator>>(istream& istr, TQueue<T1>& Q)
 {
   int n;
   T1 t;
@@ -161,7 +175,7 @@ istream& operator>>(istream& istr, TQueue<T1>& S)
   for (int i = 0; i < n; i++)
   {
     istr >> t;
-    S.Push(t);
+    Q.Push(t);
   }
   return istr;
 }
@@ -173,10 +187,24 @@ inline T TQueue<T>::GetMaxElem()
 {
   if (IsEmpty())
     throw exception();
-  int ind = 0;
-  for (int i = 1; i <= this->front; i++)
-    if (this->queue[i] > this->queue[ind])
-      ind = i;
+  int i = this->front;
+  int ind = i;
+  if (this->front <= this->back)
+  {
+    for (i; i <= this->back; i++)
+      if (this->queue[i] > this->queue[ind])
+        ind = i;
+  }
+  else
+  {
+    for (i; i < this->length; i++)
+      if (this->queue[i] > this->queue[ind])
+        ind = i;
+    i = 0;
+    for (i; i <= this->back; i++)
+      if (this->queue[i] > this->queue[ind])
+        ind = i;
+  }
   return this->queue[ind];
 }
 
@@ -185,18 +213,42 @@ inline T TQueue<T>::GetMinElem()
 {
   if (IsEmpty())
     throw exception();
-  int ind = 0;
-  for (int i = 1; i <= this->front; i++)
-    if (this->queue[i] < this->queue[ind])
-      ind = i;
+  int i = this->front;
+  int ind = i;
+  if (this->front <= this->back)
+  {
+    for (i; i <= this->back; i++)
+      if (this->queue[i] < this->queue[ind])
+        ind = i;
+  }
+  else
+  {
+    for (i; i < this->length; i++)
+      if (this->queue[i] < this->queue[ind])
+        ind = i;
+    i = 0;
+    for (i; i <= this->back; i++)
+      if (this->queue[i] < this->queue[ind])
+        ind = i;
+  }
   return this->queue[ind];
 }
 
 template<class T1>
-inline ofstream& operator<<(ofstream& ofstr, const TQueue<T1>& S)
+inline ofstream& operator<<(ofstream& ofstr, const TQueue<T1>& Q)
 {
-  for (int i = 0; i <= S.front; i++)
-    ofstr << S.queue[i];
+  int i = Q.front;
+  if (Q.front <= Q.back)
+    for (i; i <= Q.back; i++)
+      ofstr << Q.queue[i];
+  else
+  {
+    for (i; i < Q.length; i++)
+      ofstr << Q.queue[i];
+    i = 0;
+    for (i; i <= Q.back; i++)
+      ofstr << Q.queue[i];
+  }
   return ofstr;
 }
 
