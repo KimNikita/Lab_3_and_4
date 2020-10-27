@@ -93,7 +93,7 @@ inline void TStack<T>::Push(T n)
 {
   if (this->front + 1 >= this->length)
     throw exception();
-  this->stack[this->++front] = n;
+  this->stack[++this->front] = n;
 }
 
 template<class T>
