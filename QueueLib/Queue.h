@@ -17,7 +17,7 @@ protected:
   int count;
 public:
   TQueue(int size = 0);
-  TQueue(TQueue<T>& q);
+  TQueue(const TQueue<T>& q);
   ~TQueue();
 
   TQueue<T>& operator=(const TQueue<T>& q);
@@ -57,7 +57,7 @@ inline TQueue<T>::TQueue(int size)
 }
 
 template<class T>
-inline TQueue<T>::TQueue(TQueue<T>& q)
+inline TQueue<T>::TQueue(const TQueue<T>& q)
 {
   this->length = q.length;
   this->front = q.front;
@@ -139,7 +139,9 @@ inline bool TQueue<T>::IsEmpty()
 template<class T>
 inline bool TQueue<T>::IsFull()
 {
-  return !IsEmpty();
+  if (this->count == this->length)
+    return true;
+  return false;
 }
 
 template<class T>

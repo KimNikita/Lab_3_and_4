@@ -15,7 +15,7 @@ protected:
   int front;
 public:
   TStack(int size = 0);
-  TStack(TStack<T>& s);
+  TStack(const TStack<T>& s);
   ~TStack();
 
   TStack<T>& operator=(const TStack<T>& s);
@@ -53,7 +53,7 @@ inline TStack<T>::TStack(int size)
 }
 
 template<class T>
-inline TStack<T>::TStack(TStack<T>& s)
+inline TStack<T>::TStack(const TStack<T>& s)
 {
   this->length = s.length;
   this->front = s.front;
@@ -114,15 +114,17 @@ inline T TStack<T>::Get()
 template<class T>
 inline bool TStack<T>::IsEmpty()
 {
-  if (this->front == this->length - 1)
-    return false;
-  return true;
+  if (this->front == -1)
+    return true;
+  return false;
 }
 
 template<class T>
 inline bool TStack<T>::IsFull()
 {
-  return !IsEmpty();
+  if (this->front == this->length - 1)
+    return true;
+  return false;
 }
 
 template<class T>
