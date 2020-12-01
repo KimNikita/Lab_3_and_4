@@ -240,7 +240,7 @@ inline T TQueue<T>::GetMinElem()
 template<class T>
 inline void TQueue<T>::WriteToFile(string name)
 {
-  ofstream fout(name + ".txt");
+  ofstream fout(name.c_str());
   fout << *this;
   fout.close();
 }

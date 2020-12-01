@@ -185,7 +185,7 @@ inline T TStack<T>::GetMinElem()
 template<class T>
 inline void TStack<T>::WriteToFile(string name)
 {
-  ofstream fout(name + ".txt");
+  ofstream fout(name.c_str());
   fout << *this;
   fout.close();
 }
