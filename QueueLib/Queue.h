@@ -38,6 +38,7 @@ public:
 
   T GetMaxElem();
   T GetMinElem();
+  void WriteToFile(string name);
   template <class T1>
   friend ofstream& operator<<(ofstream& ofstr, const TQueue<T1>& Q);
 };
@@ -234,6 +235,14 @@ inline T TQueue<T>::GetMinElem()
         ind = i;
   }
   return this->queue[ind];
+}
+
+template<class T>
+inline void TQueue<T>::WriteToFile(string name)
+{
+  ofstream fout(name + ".txt");
+  fout << *this;
+  fout.close();
 }
 
 template<class T1>

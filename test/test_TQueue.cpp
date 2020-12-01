@@ -60,9 +60,7 @@ TEST(TQueue, can_write_queue_to_file)
   TQueue<int> Q(size);
   for (int i = 0; i < size / 2; i++)
     Q.Push(i);
-  ofstream fout("output_q.txt");
-  fout << Q;
-  fout.close();
+  Q.WriteToFile("output_q");
   string expS = "0123";
   string Queue = "";
   ifstream fin("output_q.txt");

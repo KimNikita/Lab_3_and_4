@@ -57,9 +57,7 @@ TEST(TStack, can_write_stack_to_file)
   TStack<int> S(size);
   for (int i = 0; i < size / 2; i++)
     S.Push(i);
-  ofstream fout("output_s.txt");
-  fout << S;
-  fout.close();
+  S.WriteToFile("output_s");
   string expS = "0123";
   string Stack = "";
   ifstream fin("output_s.txt");

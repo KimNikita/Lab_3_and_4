@@ -36,6 +36,7 @@ public:
 
   T GetMaxElem();
   T GetMinElem();
+  void WriteToFile(string name);
   template <class T1>
   friend ofstream& operator<<(ofstream& ofstr, const TStack<T1>& S);
 };
@@ -179,6 +180,14 @@ inline T TStack<T>::GetMinElem()
     if (this->stack[i] < this->stack[ind])
       ind = i;
   return this->stack[ind];
+}
+
+template<class T>
+inline void TStack<T>::WriteToFile(string name)
+{
+  ofstream fout(name + ".txt");
+  fout << *this;
+  fout.close();
 }
 
 template<class T1>
